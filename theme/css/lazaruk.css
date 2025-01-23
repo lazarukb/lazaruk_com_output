@@ -1,0 +1,15 @@
+/* Customisations specifically for this site.  */
+
+figcaption em, figcaption i { 
+    font-weight: bold; }
+
+
+figcaption {
+    font-weight: bold;
+	clear: left;
+	margin: 0.25em 0 1.75em;
+	text-align: center;
+	font-style: italic;
+	line-height: 1.5em;
+    font-size: 1.0em
+}

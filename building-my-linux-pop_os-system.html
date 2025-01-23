@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="english">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Herein lies all the things I did to get my system to the state it is in today. Mostly this is a record so that I can re-create it if need be. But hey, it might also be helpful to someone. Install...">
+        <meta name="keywords" content="Anaconda, AppImageLauncher, Filen, Internxt, Linux, Mega, nbfc, Pop!_OS, Timeshift, Ubuntu, Work in Progress">
+        <link rel="icon" href="/favicon.ico">
+
+        <title>Moving to Linux, Building my System - lazaruk.com</title>
+
+        <!-- Stylesheets -->
+        <link href="/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/theme/css/fonts.css" rel="stylesheet">
+        <link href="/theme/css/nest.css" rel="stylesheet">
+        <link href="/theme/css/pygment.css" rel="stylesheet">
+        <link href="/theme/css/lazaruk.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="lazaruk.com Full Atom Feed" />
+        <link href="/feeds/development.atom.xml" type="application/atom+xml" rel="alternate" title="lazaruk.com Categories Atom Feed" />
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container" style="background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('/images/header-scaled.jpg'); background-position: center; background-size: cover;">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="/"><img class="mr20" src="/images/logo.png" alt="logo">lazaruk.com</a>
+                    </div>
+                    <div class="nav pull-right">
+                                <a href="/">Homepage</a>
+                                <a href="/pages/projects.html">Projects</a>
+                                <a href="/pages/resume-cv.html">Resume / CV</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">Moving to Linux, Building my System</h1>
+                      <p class="header-date">By <a href="/author/brad-lazaruk.html">Brad Lazaruk</a>, Fri 05 July 2024, modified Fri 05 July 2024, in category <a href="/category/development.html">Development</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="/tag/anaconda.html">Anaconda</a>, <a href="/tag/appimagelauncher.html">AppImageLauncher</a>, <a href="/tag/filen.html">Filen</a>, <a href="/tag/internxt.html">Internxt</a>, <a href="/tag/linux.html">Linux</a>, <a href="/tag/mega.html">Mega</a>, <a href="/tag/nbfc.html">nbfc</a>, <a href="/tag/pop_os.html">Pop!_OS</a>, <a href="/tag/timeshift.html">Timeshift</a>, <a href="/tag/ubuntu.html">Ubuntu</a>, <a href="/tag/work-in-progress.html">Work in Progress</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
+
+
+        <!-- Content -->
+    <div class="container content">
+        <p>Herein lies all the things I did to get my system to the state it is in today. Mostly this is a record so that I can re-create it if need be. But hey, it might also be helpful to someone.</p>
+<ol type="1">
+<li><p>Install the system. Just accept all the defaults from the installation media. Make sure to enable the disk encryption and record the passwords.</p></li>
+<li><p>There are some great points <a href="https://mutschler.dev/linux/pop-os-post-install/">here</a>. I also probably am writing up this document because of being inspired by Willi. Thanks!</p></li>
+<li><p>Install <a href="https://www.fosslinux.com/125641/how-to-backup-data-on-your-pop_os-using-timeshift.htm">Timeshift</a> to capture backups of the state of the system. This still needs more testing to determine if it’s useful.</p></li>
+<li><p><a href="https://github.com/nbfc-linux/nbfc-linux">NoteBook FanControl</a></p>
+<ol type="1">
+<li>I found that the fans were not coming on effectively and the system was a bit hot. Installing this app and setting it to the “HP Spectre x360 Convertible 15-ch0xx” config has fixed this up.</li>
+</ol></li>
+<li><p>As part of my initial requirements to make the system look as much like Windows 11 as possible, to aid in my unconscious acceptance of the system, I’ve installed Dash to Panel. The configuration of it and the default dock are generally:</p>
+<ol type="1">
+<li>In the system settings:
+<ol type="1">
+<li>Disable the default dock in the Settings &gt; Desktop &gt; Dock.</li>
+<li>Toggle some settings for the Top Bar in Settings &gt; Desktop &gt; Desktop Options. Remove the Workspaces and Applications Buttons. The Super Key Action should continue to be set to Launcher. Window Controls should have both Minimize and Maximize Buttons enabled.</li>
+</ol></li>
+<li>In Dash to Panel settings:
+<ol type="1">
+<li>The settings are backed up in ~/Documents and the differences between my settings and the defaults are not necessarily all captured below. Need to expand on this as further tweaks are identified.</li>
+<li>Position: remove the Applications button and set the Taskbar to Monitor Center.</li>
+<li>Style: Set App Icon Margin to 4. Tweak Animate hovering app icons settings.</li>
+<li>Running indicator: set focused app to Metro and unfocused apps to Dashes.</li>
+<li>Panel style: Override panel theme background opacity and set it to 50%, and enable the Dynamic background opacity.</li>
+</ol></li>
+</ol></li>
+<li><p>File Syncing / Backup</p>
+<ol type="1">
+<li>This has been quite an adventure.</li>
+<li>My preferred sync option, Proton, doesn’t have a Linux app for their cloud drive (as of early July 2024). I tried Internxt and have had more problems than success with it. At this point I’m taking advantage of my free Dropbox account and Mega account to do some syncing. I also purchased a lifetime 100GB account from <a href="https://filen.io">Filen</a> which is working great. So right now I’m basically leaving everything in the various locations they were in before I moved to Linux and if I ever need something that’s when I get it to the local system and find a new permanent home for it.
+<ol type="1">
+<li>The big advantage right now is that Mega and Filen allow me to sync the local directories without moving them. Internxt allows me to backup the directories in place (except for the errors with the backup service), but if I wanted to sync them I need to move the directories to the Internxt Drive directory, and then symlink from my home folder. I don’t really want to do that and have to manage it (plus, it doesn’t reliably work right now).</li>
+</ol></li>
+<li>I also needed to capture game save information for the 2 or 3 games that I ever play. These were purchased through Steam for my Windows system. Thankfully they are functional on the Linux system with the Steam ProtonDB Windows emulation. To backup the game save information, I found the Windows filesystems in home/<username>/.var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/compatdata/ and added those to my sync client.
+<ol type="1">
+<li>I chose to not use Steam Cloud here because I just have too many save files right now. When I get those reduced to a volume that can reliably live in Steam Cloud then that’s the path I’ll change to.</li>
+</ol></username></li>
+<li>I tried using <a href="https://wiki.gnome.org/Apps/DejaDup">Déjà Dup</a> to create the backups and while it works well there isn’t a lot of reason to add another tool to the backup pipeline when Mega and Filen are syncing things just fine. I did try using Déjà Dup to run backups and store those in my Internxt Drive and let that sync up but that introduces a potential data loss between the time I change a file and the time of the next backup and sync. Again, since Mega and Filen sync in near real time there was no reason to use Déjà Dup here.</li>
+</ol></li>
+<li><p>Adding launcher icons for things that don’t otherwise have them</p>
+<ol type="1">
+<li>For example, Anaconda.</li>
+<li>Thankfully, Joe Lotz <a href="https://www.joelotz.com/blog/2021/creating-a-launch-shortcut-for-anaconda-on-ubuntu.html">has a page for this</a>. Thanks again Joe.</li>
+<li>Just crete a desktop file in the applications directory: <code>gedit ~/.local/share/applications/&lt;application name&gt;.desktop</code>.</li>
+<li>And then add data to the file:</li>
+</ol>
+<pre><code>[Desktop Entry]
+Version=1.0
+Type=Application
+Name=&lt;app name&gt;
+Exec=&lt;path&gt;
+Icon=&lt;path&gt;
+Terminal=false</code></pre>
+<ol type="1">
+<li>Since I’ve only had to do this for Anaconda so far, I can make a list of the app icon locations fairly quickly:
+<ol type="1">
+<li><code>/home/&lt;username&gt;/anaconda3/lib/python3.7/site-packages/anaconda_navigator/app/icons/Icon1024.png</code></li>
+</ol></li>
+</ol></li>
+<li><p>Getting the graphics to work</p>
+<p>Pop!_OS has a few graphics options built in to the power menu. Initially I set mine to hybrid, thinking that it would be best to use the lower power integrated graphics as the default and then use the discrete GPU when necessary. Now, it became necessary when I was running some machine learning python code, which I was able to get running by adding the command <code>__NV_PRIME_RENDER_OFFLOAD=1 &lt;application&gt;</code>, per the <a href="https://support.system76.com/articles/graphics-switch-pop/">support page</a>.</p>
+<p>But when I tried running switching between GPU enabled apps and integrated apps, especially when using the docking station, I found the system started having power problems and would inevitably freeze. Sometimes these freezes could be recovered by removing the system from the dock, and sometimes I needed to hard reboot and lose whatever I was working it.</p>
+<p>I also found that I was unable to use my two external monitor plus laptop panel setup as the resolutions and zoom settings could not be set such that all three panels were useful at the same time.</p>
+<p>I suspect that my laptop simply does not use the discrete GPU for the external display(s) when in hybrid mode. It looks like <a href="https://github.com/pop-os/nvidia-graphics-drivers/issues/61">maybe this is a bug with xorg, or that the problem may be solved with the new Cosmic DE</a>.</p>
+<p>The solution was to just switch to using the nVidia graphics mode. Since then the performance with the dock has been fine, the system is not freezing when switching between applications, and I can once again use all three panels at the same time.</p></li>
+<li><p>Integrate AppImages</p>
+<ol type="1">
+<li>Use <a href="https://github.com/TheAssassin/AppImageLauncher">AppImageLauncher</a></li>
+<li>Designate a directory to store the appimages, and set something to back it up if you like.</li>
+<li>Install the launcher:</li>
+</ol>
+<pre><code>sudo add-apt-repository ppa:appimagelauncher-team/stable
+sudo apt update
+sudo apt install appimagelauncher</code></pre>
+<ol start="4" type="1">
+<li>Run the app and customise the integration directory to point to your designated directory.</li>
+<li>That’s it. Running appimages will pop up the launcher to ask if you want to move them and add launcher icons.</li>
+<li>Thanks to <a href="https://ostechnix.com/integrate-appimages-to-application-menu-using-appimagelauncher/">ostechnix</a>.</li>
+</ol></li>
+<li><p>AntiVirus</p>
+<ol type="1">
+<li>I get that a lot of advice says to not bother installing AV for Linux, but I’m hardcoded to need to see AV on my workstation. To this end, I installed <a href="https://www.clamav.net/downloads">ClamAV</a> and ClamTK from the Pop!_Shop to be able to use it quickly.</li>
+</ol></li>
+<li><p>Keeping lists of installed applications</p>
+<ol type="1">
+<li>To restore from a crash I’ll need to know what is installed.
+<ol type="1">
+<li><code>apt list --installed</code></li>
+<li><code>ls /usr/share/applications</code></li>
+<li><code>flatpak list</code></li>
+</ol></li>
+</ol></li>
+<li><p>Screenshots</p>
+<ol type="1">
+<li>The default screenshot app is fine, but I like to be able to do quick pixelisations or annotations. On Windows I’ve been using Greenshot for years, but they have no Linux option.</li>
+<li>Thankfully, Flameshot exists. Does everything I need it to do on Linux.</li>
+<li>Install the DEB from their <a href="https://github.com/lupoDharkael/flameshot/releases">GitHub</a> so that you can configure the system to use the Print Screen button to take a screenshot with the <code>flameshot gui</code> command. There may be a way to do this with the flatpak version that is available through the Pop!_Shop.</li>
+</ol></li>
+<li><p>Changing the behaviour when closing the laptop lid</p>
+<ol type="1">
+<li>Thankfully I didn’t need to do any of this. But just in case <a href="https://ubuntuhandbook.org/index.php/2020/05/lid-close-behavior-ubuntu-20-04/">this might be useful</a></li>
+</ol></li>
+<li><p>The fingerprint reader</p>
+<ol type="1">
+<li>Apparently is not supported by either the gnome option or any of the other options I was able to find and try, such as fprint.</li>
+</ol></li>
+<li><p>LibreOffice</p>
+<ol type="1">
+<li>Again, I’m interested in kinda forcing myself to stick with Linux by making it look as much as possible like my more familiar Windows surroundings.</li>
+<li>So, <a href="https://www.howtogeek.com/788591/how-to-make-libreoffice-look-like-microsoft-office/">tweaking LibreOffice</a> a bit doesn’t hurt.</li>
+<li>I also found that the versions of LibreOffice that come with Pop!_OS don’t seem to upgrade to the newest versions. To resolve this I did a fresh install of the Linux versions of the apps, and then removed those older ones that came with the OS.</li>
+</ol></li>
+<li><p>Photo Manager</p>
+<ol type="1">
+<li>One of my big problems is that over the years my photos have become very duplicated and spaghettified. They are spread over hundreds of folder and renamed here and there in attempts to identify or save meta data. At times I’ve done mass restores to separate folders that then were merged - it’s a nightmare.</li>
+<li>After looking through <a href="https://itsfoss.com/linux-photo-management-software/">some options</a>, I settled on digiKam to try and help me sort this out. It looks like it does a great job of identifying duplicates which is the first step for me. Now I can go through all the files I have and sort them as I import them and remove the straight up duplicates.</li>
+</ol></li>
+</ol>
+<h3 id="customise-apps">Customise Apps</h3>
+<ol type="1">
+<li>vscodium
+<ol type="1">
+<li>Change the terminal with the command palette <code>terminal: select default profile</code>.</li>
+<li>Set up sync with the <a href="https://open-vsx.org/vscode/item?itemName=Shan.code-settings-sync">Settings Sync extension</a>. Make sure it’s set to Auto Download and Auto Upload, add and remove extensions, and quiet sync (otherwise it keeps popping up an output window and taking the focus from any terminals that are running).</li>
+</ol></li>
+<li>PyCharm
+<ol type="1">
+<li>Change the terminal here too - use the <a href="https://www.jetbrains.com/help/pycharm/settings-tools-terminal.html#project-settings">New Terminal</a></li>
+</ol></li>
+<li>pandoc
+<ol type="1">
+<li>Required for some of my static sites. pandoc is a pain but it’s easy to fix thanks to <a href="https://stackoverflow.com/a/71585691">this post</a>. Basically, in conda you can get it working with <code>conda install pandoc</code>, and without conda there are other things that need doing.</li>
+</ol></li>
+</ol>
+
+
+        
+    </div>
+        <!-- /Content --> 
+
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="/archives.html">Archives</a></li>
+                            <li><a href="/categories.html">Categories</a></li>
+                            <li><a href="/tags.html">Tags</a></li>
+                            <li><a href="/pages/cookie-and-privacy-policy.html">Cookies and Privacy</a></li>
+                            <li><a href="/pages/website-terms-of-service.html">Terms of Service</a></li>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">Atom Feed</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a rel="me" href="https://mstdn.ca/@lazarukb" target="_blank">Mastodon</a></li>
+                            <li><a href="https://scholar.google.com/citations?hl=en&authuser=1&user=4VlCIXPOr30C" target="_blank">Google Scholar</a></li>
+                            <li><a href="https://www.researchgate.net/profile/Brad-Lazaruk" target="_blank">ResearchGate</a></li>
+                            <li><a href="https://www.linkedin.com/in/bradlazaruk/" target="_blank">LinkedIn</a></li>
+                            <li><a href="https://www.hackerrank.com/blazaruk" target="_blank">HackerRank</a></li>
+                            <li><a href="https://github.com/lazarukb" target="_blank">GitHub</a></li>
+                            <li><a href="https://bylinetimes.com/2020/05/11/the-media-needs-to-stop-pretending-elon-mask-is-a-wise-sage-rather-than-a-grifter/" target="_blank">Twitter</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="https://www.python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="https://palletsprojects.com/p/jinja/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
+                            <small>&copy; Brad Lazaruk 1999-2024</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+    </body>
+</html>

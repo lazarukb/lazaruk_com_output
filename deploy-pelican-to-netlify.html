@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="english">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Well it only seems fitting that the first post I write for this iteration of the site would be a description of how I made it. As I go back and add content from the old site(s) to this one I’m...">
+        <meta name="keywords" content="GitHub, Netlify, Pelican, Python">
+        <link rel="icon" href="/favicon.ico">
+
+        <title>Hello, world. - lazaruk.com</title>
+
+        <!-- Stylesheets -->
+        <link href="/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/theme/css/fonts.css" rel="stylesheet">
+        <link href="/theme/css/nest.css" rel="stylesheet">
+        <link href="/theme/css/pygment.css" rel="stylesheet">
+        <link href="/theme/css/lazaruk.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="lazaruk.com Full Atom Feed" />
+        <link href="/feeds/development.atom.xml" type="application/atom+xml" rel="alternate" title="lazaruk.com Categories Atom Feed" />
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container" style="background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('/images/Its-Time-To-Program-Something.jpg'); background-position: center; background-size: cover;">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="/"><img class="mr20" src="/images/logo.png" alt="logo">lazaruk.com</a>
+                    </div>
+                    <div class="nav pull-right">
+                                <a href="/">Homepage</a>
+                                <a href="/pages/projects.html">Projects</a>
+                                <a href="/pages/resume-cv.html">Resume / CV</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">Hello, world.</h1>
+                      <p class="header-date">By <a href="/author/brad-lazaruk.html">Brad Lazaruk</a>, Sun 14 August 2022, modified Tue 27 June 2023, in category <a href="/category/development.html">Development</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="/tag/github.html">GitHub</a>, <a href="/tag/netlify.html">Netlify</a>, <a href="/tag/pelican.html">Pelican</a>, <a href="/tag/python.html">Python</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
+
+
+        <!-- Content -->
+    <div class="container content">
+        <p>Well it only seems fitting that the first post I write for this iteration of the site would be a description of how I made it. As I go back and add content from the old site(s) to this one I’m going to manually update the timestamp to the original posting time. So things may be older on the site - but this is the first post. This site is a static site generated with <a href="https://getpelican.com">Pelican</a> and hosted on <a href="https://netlify.com">Netlify</a>. I chose Pelican because I wanted a static site generator, and I wanted it to be associated with Python if possible, and I wanted to use Markdown to write the actual posts and files. I don’t require anything like Django right now … maybe later.</p>
+<p>Assumptions: You have a <a href="https://github.com">GitHub</a> account, and GitHub desktop is installed and configured. <a href="https://anaconda.com">Anaconda</a> is installed and configured. You’ve got a Netlify account.</p>
+<h2 id="setup">Setup</h2>
+<ol type="1">
+<li><p>I like Anaconda, so I defined a new environment there. I double checked that python was at least version 3.8, and installed pelican and markdown, along with whatever dependencies those brought about.</p></li>
+<li><p>Since I prefer to use GitHub desktop I fired that up and clicked on File &gt; New Repository. I gave my new repo a name and description and pointed the local path to the repos folder to let the application create the subfolder based on the name of the repository. I created the README so I could populate it later. Since I was creating my own Git ignore file later I did not choose one here and I since this is a Pelican website I used the GNU AGPLv3 license to respect the license of the original project.</p></li>
+<li><p>Now I opened the project folder and create a file called .gitignore. Into .gitignore I added the default Python exclusions from <a href="https://gitignore.io">gitignore.io</a>, and at the end of the file I added</p>
+<pre><code># Pelican output directory
+    output/</code></pre>
+<p>After committing that to the repo the standard Python bits, as well as the output directory of the site itself, are not going to be pushed to GitHub. That’s fine since Netlify will be rebuilding the output directory locally every time I commit a new change to the repo.</p></li>
+<li><p>From inside the project folder, I setup the pelican structure with the command <code>pelican-quickstart</code>. This launched a configuration wizard. I accepted the defaults except for:</p>
+<ul>
+<li>“What will be the title of this web site?”
+<ul>
+<li>This is written to the pelicanconf.py file as the SITENAME</li>
+</ul></li>
+<li>“Who will be the author of this web site?”
+<ul>
+<li>Written to pelicanconf.py as AUTHOR</li>
+</ul></li>
+<li>“Do you want to specify a URL prefix?”
+<ul>
+<li>Set this to N. When I specified Y then the URL was used instead of relative paths for images which made local development pretty much impossible.</li>
+</ul></li>
+<li>Get the timezone for the site from <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">Wikipedia</a>, and enter it when prompted</li>
+</ul></li>
+</ol>
+<h2 id="customise-pelican-and-prepare-it-for-netlify">Customise Pelican and Prepare It For Netlify</h2>
+<ol type="1">
+<li><p>I wanted to have a bit of a theme on the site from the beginning, so I hunted around on <a href="http://pelicanthemes.com">pelicanthemes.com</a> and settled on the <a href="https://github.com/molivier/nest">nest</a> theme. After messing about with it a bit I discovered that it needed to be changed to work with the version of Pelican I was using. So I <a href="https://github.com/lazarukb/nest">forked</a> the original theme and applied the changes to the fork.</p>
+<ul>
+<li>To do the changes I edited base.html on the theme and changed four instances of ‘|format(’ to be ‘.format(slug=’, so that CATEGORY_FEED_ATOM|format(category.slug) becomes ‘CATEGORY_FEED_ATOM.format(slug=category.slug)’.</li>
+</ul>
+<p>After that, I created a /theme folder in the project folder, and downloaded the theme to it.</p></li>
+<li><p>In the project folder under /content, I added an images folder and a file there for the logo of the site. I scaled it down to 25x25. I also added an image for the background of the header.</p></li>
+<li><p>To pelicanconf.py I added the <a href="https://github.com/molivier/nest">default configuration information for the theme</a>. Among other customisations for various strings I pointed the site logo to ‘/images/logo.png’, including the path, and homepage header image specified as the filename only, ‘header-scaled.jpg’.</p></li>
+<li><p>That should be the base of the site. I committed those changes to the repo and test built the site locally with</p>
+<pre><code>pelican content -d -s publishconf.py -t theme --autoreload
+pelican --listen</code></pre>
+<p>… which you can now combine on Windows as</p>
+<pre><code>pelican content -d -s publishconf.py -t theme --autoreload --listen</code></pre>
+<p>Alternatively you can skip the second command for –listen and use a local server like Live Server in vscode to actually view the site.</p>
+<p>The <code>-d</code> flag causes pelican to delete the content directory before rebuilding the site. The <code>--autoreload</code> flag tells pelican to keep watch on the content folders and rebuild the site automatically when content is added, edited, or removed. As expected, that gave me a functioning site on http://localhost:8000 with the logo and background images I specified.</p>
+<ol type="1">
+<li>Special usage note: until the site is building reliably, just use</li>
+</ol>
+<pre><code>pelican content -d -s publishconf.py -t theme</code></pre>
+<p>…so you can see the console errors in the build process.</p></li>
+<li><p>Now that the shell is working, I created a requirements.txt file of the working environment, both as a checkpoint myself and also so Netlify will be able to duplicate it, with the command <code>pip freeze &gt; requirements.txt</code>.</p></li>
+<li><p>When I tested this originally, Netlify was deploying the site with Python 2.7 which was not at all working. So to specify the version of Python I was using locally, 3.8, per <a href="https://docs.netlify.com/configure-builds/manage-dependencies/#python">the docs</a> I created a runtime.txt file in the root of the project, and added <strong>3.8</strong> to that file.</p></li>
+<li><p>After committing those changes to the repo, it’s ready to go. So I published it to GitHub with the desktop app. I left the repo set to private at this point.</p></li>
+</ol>
+<h2 id="deploy-the-site-to-netlify">Deploy the site to Netlify</h2>
+<p>All that remains is to deploy the site with Netlify.</p>
+<ol type="1">
+<li>I logged in to Netlify and selected Sites &gt; Add New Site &gt; Import an existing project.</li>
+<li>On the next page, I clicked GitHub.
+<ul>
+<li>The first time I did this I needed to connect my Netlify account to my GitHub account by following the prompts.</li>
+</ul></li>
+<li>Once GitHub and Netlify were connected, I did a search on my repos to find the one for the website, and selected it.</li>
+<li>On the next page:
+<ul>
+<li>on <em>branch to deploy</em> I selected <strong>main</strong>.</li>
+<li>The <em>base directory</em> I left blank.</li>
+<li>The <em>build command</em> is <code>pelican content -s publishconf.py -t theme</code></li>
+<li>The <em>publish directory</em> is <strong>output</strong>.</li>
+</ul></li>
+<li>That’s it. I clicked on Deploy Site and awaited …</li>
+</ol>
+<p>… the shell of my site was deployed to Netlify. Volia.</p>
+<p>After that all that remained was to re-direct my domain to point here, and configure the Let’s Encrypt certificate to enable HTTPS. This is available under the Netlify Site settings for the new site. Following the directions on the Netlify pages this change took me all of 4 minutes of editing on my DNS server, and the deployment of the SSL certificate was a couple of clicks and otherwise automatically done in a few minutes.</p>
+<p>And that’s it. After several years of stalling I have completed a reasonable starting point for a new static site version of the website and deployed it. Took me a couple of hours to figure it all out, and maybe 20 minutes start to finish for the final production version. Hope this helps.</p>
+<hr/>
+<h3 id="thanks">Thanks!</h3>
+<ul>
+<li><a href="https://razcodes.dev/">Raz</a>, for general direction <a href="https://dev.to/razcodes/how-to-create-a-static-website-using-pelican-24he">here</a> and <a href="https://dev.to/razcodes/how-to-deploy-your-static-pelican-website-to-netlify-55d7">here</a></li>
+<li><a href="https://frankcorso.dev/">Frank Corso</a> for the general directions <a href="https://frankcorso.dev/deploying-your-pelican-static-site-to-netlify.html">here</a></li>
+<li><a href="https://github.com/mirajpatel19">Miraj Patel</a> for the pointers to hack the theme so it would work with Pelican 4 <a href="https://github.com/getpelican/pelican/issues/2489#issuecomment-472176621">here</a></li>
+</ul>
+
+
+        
+    </div>
+        <!-- /Content --> 
+
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="/archives.html">Archives</a></li>
+                            <li><a href="/categories.html">Categories</a></li>
+                            <li><a href="/tags.html">Tags</a></li>
+                            <li><a href="/pages/cookie-and-privacy-policy.html">Cookies and Privacy</a></li>
+                            <li><a href="/pages/website-terms-of-service.html">Terms of Service</a></li>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">Atom Feed</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a rel="me" href="https://mstdn.ca/@lazarukb" target="_blank">Mastodon</a></li>
+                            <li><a href="https://scholar.google.com/citations?hl=en&authuser=1&user=4VlCIXPOr30C" target="_blank">Google Scholar</a></li>
+                            <li><a href="https://www.researchgate.net/profile/Brad-Lazaruk" target="_blank">ResearchGate</a></li>
+                            <li><a href="https://www.linkedin.com/in/bradlazaruk/" target="_blank">LinkedIn</a></li>
+                            <li><a href="https://www.hackerrank.com/blazaruk" target="_blank">HackerRank</a></li>
+                            <li><a href="https://github.com/lazarukb" target="_blank">GitHub</a></li>
+                            <li><a href="https://bylinetimes.com/2020/05/11/the-media-needs-to-stop-pretending-elon-mask-is-a-wise-sage-rather-than-a-grifter/" target="_blank">Twitter</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="https://www.python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="https://palletsprojects.com/p/jinja/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
+                            <small>&copy; Brad Lazaruk 1999-2024</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+    </body>
+</html>

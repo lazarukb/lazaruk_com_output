@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="english">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Recently I started using Simplelogin. A wonderful service, it lets you create temporary email addresses and disable or delete them when you don’t want them anymore. I also get to redirect all my...">
+        <meta name="keywords" content="sieve filtering, simplelogin">
+        <link rel="icon" href="/favicon.ico">
+
+        <title>Email Sieve Filtering with Simplelogin - lazaruk.com</title>
+
+        <!-- Stylesheets -->
+        <link href="/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/theme/css/fonts.css" rel="stylesheet">
+        <link href="/theme/css/nest.css" rel="stylesheet">
+        <link href="/theme/css/pygment.css" rel="stylesheet">
+        <link href="/theme/css/lazaruk.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="lazaruk.com Full Atom Feed" />
+        <link href="/feeds/note-to-self.atom.xml" type="application/atom+xml" rel="alternate" title="lazaruk.com Categories Atom Feed" />
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container" style="background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('/images/Its-Time-To-Program-Something.jpg'); background-position: center; background-size: cover;">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="/"><img class="mr20" src="/images/logo.png" alt="logo">lazaruk.com</a>
+                    </div>
+                    <div class="nav pull-right">
+                                <a href="/">Homepage</a>
+                                <a href="/pages/projects.html">Projects</a>
+                                <a href="/pages/resume-cv.html">Resume / CV</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">Email Sieve Filtering with Simplelogin</h1>
+                      <p class="header-date">By <a href="/author/brad-lazaruk.html">Brad Lazaruk</a>, Sat 10 September 2022, modified Sat 10 September 2022, in category <a href="/category/note-to-self.html">Note to self</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="/tag/sieve-filtering.html">sieve filtering</a>, <a href="/tag/simplelogin.html">simplelogin</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
+
+
+        <!-- Content -->
+    <div class="container content">
+        <p>Recently I started using <a href="https://simplelogin.io">Simplelogin</a>. A wonderful service, it lets you create temporary email addresses and disable or delete them when you don’t want them anymore.</p>
+<p>I also get to redirect all my domain email through there so I can use throwaway email addresses with my own <span class="citation" data-cites="lazaruk.com">@lazaruk.com</span> domain.</p>
+<p>But on the downside, once I turned it on, all my email filters broke. Most of them were based on sender email addresses or domains in the SMTP header <em>from</em> field, and with Simplelogin intercepting all the emails the addresses all changed and the domain for all email reaching me is now simplelogin.co.</p>
+<p>I’ve had the same email address for 25 years, and I have no intention of disabling it. So for those spammers that are sending to my main address I need to filter their mail after Simplelogin has forwarded it.</p>
+<p>This gave me the reason to finally figure out the <a href="http://sieve.info/">Sieve</a> email filtering that my mail service provider has.</p>
+<p>In the end I was able to work out three filters: one for the name that the sender included in their email, one for their original <em>from</em> address, and another for the <em>Message-ID</em>.</p>
+<p><strong>To-Do</strong>: I’m sure there are too many commands in the require statements. I still need to go through those and reduce them to the minimum required.</p>
+<h3 id="name">Name</h3>
+<p>By far the easiest to implement, probably the most useful for filtering people that I know, and also the least likely to be useful for filtering spammers. Spammers will easily change the “name” that they appear to send their email from. On the other hand, my friends “Bob McGoodGuy” and “Alice SeemsFriendly” always configure their email accounts to send their name as the <em>from</em> field.</p>
+<p>So to file emails from my friends, I use this:</p>
+<pre><code>require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric"];
+require ["fileinto"];
+
+if allof (address :all :comparator "i;unicode-casemap" :contains "From" ["Bob McGoodGuy", "Alice SeemsFriendly"]) {
+    fileinto "Mail from friends";
+}</code></pre>
+<p>While to reject emails from “Eve Real-Person”, who just won’t leave me alone, this does the trick:</p>
+<pre><code>require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric"];
+require ["reject"];
+
+if allof (address :all :comparator "i;unicode-casemap" :contains "From" "Eve Real-Person") {
+    reject "550 5.1.1: Recipient address rejected: Address does not exist";
+}
+</code></pre>
+<h3 id="from-address">From: Address</h3>
+<p>Now some spammers will fiddle with their <em>from</em> name, but leave the email address they are sending from alone. Also, this filter works for catching those distribution lists that are not respecting unsubscribe requests. They often send from the same addresses or domains and so are easy to filter. It can also be used to reject entire domains.</p>
+<p>But as I noted above, the <em>from</em> field is always changed by Simplelogin. You can set it up so that the “name” portion is retained and still comes through in the <em>from</em> field. But the address is always changed.</p>
+<p>To resolve this, I configured Simplelogin to include to original sender in the email headers (just a click in their settings). And now I just have to have my sieve filter scan the <em>X-Simplelogin-Envelope-From</em> field in the header and compare the original name and email address information with those that I want to filter.</p>
+<p>All this also has the nice effect of surviving and functioning if I choose to change the way Simplelogin presents the original sender name to me. There are a few options, but changing them won’t break these sieve filters.</p>
+<pre><code>require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric"];
+require ["imap4flags", "reject"];
+
+if anyof (header :is "X-Simplelogin-Envelope-From" ["daily-list.ext", "newsletter@daily-list.ext", "idiot06@yahoo.ca", "Spammer McSpammyPants"]) {
+    reject "550 5.1.1: Recipient address rejected: Address does not exist";
+}</code></pre>
+<h3 id="message-id">Message-ID</h3>
+<p>The most complicated so far is for those spammers that change the name and email domain in the header <em>from</em> field. This, of course, is most of them.</p>
+<p>Now I’m sure this will be an evolving battle.</p>
+<p>Even if their names and domains are forged, they still need to send the emails from somewhere. And those spammers that are concerned about not wasting their time and resources will put in legitimate addresses to catch bouncebacks from mailboxes that no longer exist. That way when they receive a “550” error that my mailbox doesn’t exist they stop sending mail to that address.</p>
+<p>I know that this field is set by the spammers so they can technically forge it too, but right now the <em>Message-ID</em> field is giving me enough to filter them with.</p>
+<p>Checking into the headers of the recent batches of spam, I noted they were coming from a few specific domains. So I added a filter to scan the <em>Message-ID</em> field and trigger if those domains are found.</p>
+<pre><code>require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "imap4flags", "reject"];
+
+if anyof (header :contains "Message-Id" ["@spammer-domain.com", "@alter.spammers.co", "@another.spammer.net"]) {
+    reject "550 5.1.1: Recipient address rejected: Address does not exist";
+}</code></pre>
+<p>And voila. Regardless of the name and email address that the spammer uses, this does the job in rejecting messages that include those domains in the <em>Message-ID</em>.</p>
+<p>So for so good!</p>
+
+
+        
+    </div>
+        <!-- /Content --> 
+
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="/archives.html">Archives</a></li>
+                            <li><a href="/categories.html">Categories</a></li>
+                            <li><a href="/tags.html">Tags</a></li>
+                            <li><a href="/pages/cookie-and-privacy-policy.html">Cookies and Privacy</a></li>
+                            <li><a href="/pages/website-terms-of-service.html">Terms of Service</a></li>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">Atom Feed</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a rel="me" href="https://mstdn.ca/@lazarukb" target="_blank">Mastodon</a></li>
+                            <li><a href="https://scholar.google.com/citations?hl=en&authuser=1&user=4VlCIXPOr30C" target="_blank">Google Scholar</a></li>
+                            <li><a href="https://www.researchgate.net/profile/Brad-Lazaruk" target="_blank">ResearchGate</a></li>
+                            <li><a href="https://www.linkedin.com/in/bradlazaruk/" target="_blank">LinkedIn</a></li>
+                            <li><a href="https://www.hackerrank.com/blazaruk" target="_blank">HackerRank</a></li>
+                            <li><a href="https://github.com/lazarukb" target="_blank">GitHub</a></li>
+                            <li><a href="https://bylinetimes.com/2020/05/11/the-media-needs-to-stop-pretending-elon-mask-is-a-wise-sage-rather-than-a-grifter/" target="_blank">Twitter</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="https://www.python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="https://palletsprojects.com/p/jinja/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
+                            <small>&copy; Brad Lazaruk 1999-2024</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+    </body>
+</html>

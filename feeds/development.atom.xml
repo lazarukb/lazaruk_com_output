@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>lazaruk.com - Development</title><link href="/" rel="alternate"></link><link href="/feeds/development.atom.xml" rel="self"></link><id>/</id><updated>2024-07-14T00:00:00-06:00</updated><subtitle>wasting electons since 1999</subtitle><entry><title>Moving to Linux, Issues and Lessons Learned</title><link href="/building-my-linux-lessons-learned.html" rel="alternate"></link><published>2024-07-05T00:00:00-06:00</published><updated>2024-07-14T00:00:00-06:00</updated><author><name>Brad Lazaruk</name></author><id>tag:None,2024-07-05:/building-my-linux-lessons-learned.html</id><summary type="html"></summary><content type="html">&lt;p&gt;Of course when moving from over 30 years of using Windows to a Linux system, I made a few mistakes and had to look up a few things.&lt;/p&gt;
+&lt;h3 id="updates-to-the-dock"&gt;Updates to the dock&lt;/h3&gt;
+&lt;p&gt;In playing around with various dock extensions I found that my default dock had a delay of 3-5 seconds between an app being launched or closed and the icon being added or removed from the dock. I figured that since the Pop!_OS dock is a customised version of Dash to Dock, and I had installed that extension, I had probably corrupted something. Research led me &lt;a href="https://www.reddit.com/r/pop_os/comments/oxm96p/reset_cosmic_dock_to_default_settings/"&gt;here&lt;/a&gt;, which may have fixed the problem. I also went back to the &lt;a href="https://extensions.gnome.org/"&gt;gnome extensions site&lt;/a&gt; and disabled the “Ubuntu AppIndicators” extension, even though it says that extension does nothing and it seems to automatically re-enable itself. This action appeared to fix the problem but in hindsight that doesn’t really make sense to me and further testing would be required.&lt;/p&gt;
+&lt;h3 id="loss-of-right-mouse-click"&gt;Loss of right-mouse click&lt;/h3&gt;
+&lt;p&gt;After a reboot one day I found that my right-mouse button was not working on the desktop or in the default file manager. It worked in my browser, other file managers, and most other applications. I’ve yet to find out exactly which setting, but using the Gnome-Tweaks application was the problem. Doing a “result to default values” in there and then logging out-in re-enabled the functionality.&lt;/p&gt;
+&lt;h3 id="suspend"&gt;Suspend&lt;/h3&gt;
+&lt;p&gt;Doesn’t work very well when the graphics are set to nVidia mode. Seems to work fine in integrated and hybrid mode, although then I wouldn’t be able to use the external monitors.&lt;/p&gt;</content><category term="Development"></category><category term="Linux"></category><category term="Pop!_OS"></category><category term="Dash to Dock"></category></entry><entry><title>Moving to Linux, Building my System</title><link href="/building-my-linux-pop_os-system.html" rel="alternate"></link><published>2024-07-05T00:00:00-06:00</published><updated>2024-07-05T00:00:00-06:00</updated><author><name>Brad Lazaruk</name></author><id>tag:None,2024-07-05:/building-my-linux-pop_os-system.html</id><summary type="html"></summary><content type="html">&lt;p&gt;Herein lies all the things I did to get my system to the state it is in today. Mostly this is a record so that I can re-create it if need be. But hey, it might also be helpful to someone.&lt;/p&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;&lt;p&gt;Install the system. Just accept all the defaults from the installation media. Make sure to enable the disk encryption and record the passwords.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;There are some great points &lt;a href="https://mutschler.dev/linux/pop-os-post-install/"&gt;here&lt;/a&gt;. I also probably am writing up this document because of being inspired by Willi. Thanks!&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Install &lt;a href="https://www.fosslinux.com/125641/how-to-backup-data-on-your-pop_os-using-timeshift.htm"&gt;Timeshift&lt;/a&gt; to capture backups of the state of the system. This still needs more testing to determine if it’s useful.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="https://github.com/nbfc-linux/nbfc-linux"&gt;NoteBook FanControl&lt;/a&gt;&lt;/p&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;I found that the fans were not coming on effectively and the system was a bit hot. Installing this app and setting it to the “HP Spectre x360 Convertible 15-ch0xx” config has fixed this up.&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;As part of my initial requirements to make the system look as much like Windows 11 as possible, to aid in my unconscious acceptance of the system, I’ve installed Dash to Panel. The configuration of it and the default dock are generally:&lt;/p&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;In the system settings:
+&lt;ol type="1"&gt;
+&lt;li&gt;Disable the default dock in the Settings &amp;gt; Desktop &amp;gt; Dock.&lt;/li&gt;
+&lt;li&gt;Toggle some settings for the Top Bar in Settings &amp;gt; Desktop &amp;gt; Desktop Options. Remove the Workspaces and Applications Buttons. The Super Key Action should continue to be set to Launcher. Window Controls should have both Minimize and Maximize Buttons enabled.&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;In Dash to Panel settings:
+&lt;ol type="1"&gt;
+&lt;li&gt;The settings are backed up in ~/Documents and the differences between my settings and the defaults are not necessarily all captured below. Need to expand on this as further tweaks are identified.&lt;/li&gt;
+&lt;li&gt;Position: remove the Applications button and set the Taskbar to Monitor Center.&lt;/li&gt;
+&lt;li&gt;Style: Set App Icon Margin to 4. Tweak Animate hovering app icons settings.&lt;/li&gt;
+&lt;li&gt;Running indicator: set focused app to Metro and unfocused apps to Dashes.&lt;/li&gt;
+&lt;li&gt;Panel style: Override panel theme background opacity and set it to 50%, and enable the Dynamic background opacity.&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;File Syncing / Backup&lt;/p&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;This has been quite an adventure.&lt;/li&gt;
+&lt;li&gt;My preferred sync option, Proton, doesn’t have a Linux app for their cloud drive (as of early July 2024). I tried Internxt and have had more problems than success with it. At this point I’m taking advantage of my free Dropbox account and Mega account to do some syncing. I also purchased a lifetime 100GB account from &lt;a href="https://filen.io"&gt;Filen&lt;/a&gt; which is working great. So right now I’m basically leaving everything in the various locations they were in before I moved to Linux and if I ever need something that’s when I get it to the local system and find a new permanent home for it.
+&lt;ol type="1"&gt;
+&lt;li&gt;The big advantage right now is that Mega and Filen allow me to sync the local directories without moving them. Internxt allows me to backup the directories in place (except for the errors with the backup service), but if I wanted to sync them I need to move the directories to the Internxt Drive directory, and then symlink from my home folder. I don’t really want to do that and have to manage it (plus, it doesn’t reliably work right now).&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;I also needed to capture game save information for the 2 or 3 games that I ever play. These were purchased through Steam for my Windows system. Thankfully they are functional on the Linux system with the Steam ProtonDB Windows emulation. To backup the game save information, I found the Windows filesystems in home/&lt;username&gt;/.var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/compatdata/ and added those to my sync client.
+&lt;ol type="1"&gt;
+&lt;li&gt;I chose to not use Steam Cloud here because I just have too many save files right now. When I get those reduced to a volume that can reliably live in Steam Cloud then that’s the path I’ll change to.&lt;/li&gt;
+&lt;/ol&gt;&lt;/username&gt;&lt;/li&gt;
+&lt;li&gt;I tried using &lt;a href="https://wiki.gnome.org/Apps/DejaDup"&gt;Déjà Dup&lt;/a&gt; to create the backups and while it works well there isn’t a lot of reason to add another tool to the backup pipeline when Mega and Filen are syncing things just fine. I did try using Déjà Dup to run backups and store those in my Internxt Drive and let that sync up but that introduces a potential data loss between the time I change a file and the time of the next backup and sync. Again, since Mega and Filen sync in near real time there was no reason to use Déjà Dup here.&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Adding launcher icons for things that don’t otherwise have them&lt;/p&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;For example, Anaconda.&lt;/li&gt;
+&lt;li&gt;Thankfully, Joe Lotz &lt;a href="https://www.joelotz.com/blog/2021/creating-a-launch-shortcut-for-anaconda-on-ubuntu.html"&gt;has a page for this&lt;/a&gt;. Thanks again Joe.&lt;/li&gt;
+&lt;li&gt;Just crete a desktop file in the applications directory: &lt;code&gt;gedit ~/.local/share/applications/&amp;lt;application name&amp;gt;.desktop&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;And then add data to the file:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;[Desktop Entry]
+Version=1.0
+Type=Application
+Name=&amp;lt;app name&amp;gt;
+Exec=&amp;lt;path&amp;gt;
+Icon=&amp;lt;path&amp;gt;
+Terminal=false&lt;/code&gt;&lt;/pre&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;Since I’ve only had to do this for Anaconda so far, I can make a list of the app icon locations fairly quickly:
+&lt;ol type="1"&gt;
+&lt;li&gt;&lt;code&gt;/home/&amp;lt;username&amp;gt;/anaconda3/lib/python3.7/site-packages/anaconda_navigator/app/icons/Icon1024.png&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Getting the graphics to work&lt;/p&gt;
+&lt;p&gt;Pop!_OS has a few graphics options built in to the power menu. Initially I set mine to hybrid, thinking that it would be best to use the lower power integrated graphics as the default and then use the discrete GPU when necessary. Now, it became necessary when I was running some machine learning python code, which I was able to get running by adding the command &lt;code&gt;__NV_PRIME_RENDER_OFFLOAD=1 &amp;lt;application&amp;gt;&lt;/code&gt;, per the &lt;a href="https://support.system76.com/articles/graphics-switch-pop/"&gt;support page&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;But when I tried running switching between GPU enabled apps and integrated apps, especially when using the docking station, I found the system started having power problems and would inevitably freeze. Sometimes these freezes could be recovered by removing the system from the dock, and sometimes I needed to hard reboot and lose whatever I was working it.&lt;/p&gt;
+&lt;p&gt;I also found that I was unable to use my two external monitor plus laptop panel setup as the resolutions and zoom settings could not be set such that all three panels were useful at the same time.&lt;/p&gt;
+&lt;p&gt;I suspect that my laptop simply does not use the discrete GPU for the external display(s) when in hybrid mode. It looks like &lt;a href="https://github.com/pop-os/nvidia-graphics-drivers/issues/61"&gt;maybe this is a bug with xorg, or that the problem may be solved with the new Cosmic DE&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The solution was to just switch to using the nVidia graphics mode. Since then the performance with the dock has been fine, the system is not freezing when switching between applications, and I can once again use all three panels at the same time.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Integrate AppImages&lt;/p&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;Use &lt;a href="https://github.com/TheAssassin/AppImageLauncher"&gt;AppImageLauncher&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Designate a directory to store the appimages, and set something to back it up if you like.&lt;/li&gt;
+&lt;li&gt;Install the launcher:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;sudo add-apt-repository ppa:appimagelauncher-team/stable
+sudo apt update
+sudo apt install appimagelauncher&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start="4" type="1"&gt;
+&lt;li&gt;Run the app and customise the integration directory to point to your designated directory.&lt;/li&gt;
+&lt;li&gt;That’s it. Running appimages will pop up the launcher to ask if you want to move them and add launcher icons.&lt;/li&gt;
+&lt;li&gt;Thanks to &lt;a href="https://ostechnix.com/integrate-appimages-to-application-menu-using-appimagelauncher/"&gt;ostechnix&lt;/a&gt;.&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;AntiVirus&lt;/p&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;I get that a lot of advice says to not bother installing AV for Linux, but I’m hardcoded to need to see AV on my workstation. To this end, I installed &lt;a href="https://www.clamav.net/downloads"&gt;ClamAV&lt;/a&gt; and ClamTK from the Pop!_Shop to be able to use it quickly.&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Keeping lists of installed applications&lt;/p&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;To restore from a crash I’ll need to know what is installed.
+&lt;ol type="1"&gt;
+&lt;li&gt;&lt;code&gt;apt list --installed&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ls /usr/share/applications&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;flatpak list&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Screenshots&lt;/p&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;The default screenshot app is fine, but I like to be able to do quick pixelisations or annotations. On Windows I’ve been using Greenshot for years, but they have no Linux option.&lt;/li&gt;
+&lt;li&gt;Thankfully, Flameshot exists. Does everything I need it to do on Linux.&lt;/li&gt;
+&lt;li&gt;Install the DEB from their &lt;a href="https://github.com/lupoDharkael/flameshot/releases"&gt;GitHub&lt;/a&gt; so that you can configure the system to use the Print Screen button to take a screenshot with the &lt;code&gt;flameshot gui&lt;/code&gt; command. There may be a way to do this with the flatpak version that is available through the Pop!_Shop.&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Changing the behaviour when closing the laptop lid&lt;/p&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;Thankfully I didn’t need to do any of this. But just in case &lt;a href="https://ubuntuhandbook.org/index.php/2020/05/lid-close-behavior-ubuntu-20-04/"&gt;this might be useful&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;The fingerprint reader&lt;/p&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;Apparently is not supported by either the gnome option or any of the other options I was able to find and try, such as fprint.&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;LibreOffice&lt;/p&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;Again, I’m interested in kinda forcing myself to stick with Linux by making it look as much as possible like my more familiar Windows surroundings.&lt;/li&gt;
+&lt;li&gt;So, &lt;a href="https://www.howtogeek.com/788591/how-to-make-libreoffice-look-like-microsoft-office/"&gt;tweaking LibreOffice&lt;/a&gt; a bit doesn’t hurt.&lt;/li&gt;
+&lt;li&gt;I also found that the versions of LibreOffice that come with Pop!_OS don’t seem to upgrade to the newest versions. To resolve this I did a fresh install of the Linux versions of the apps, and then removed those older ones that came with the OS.&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Photo Manager&lt;/p&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;One of my big problems is that over the years my photos have become very duplicated and spaghettified. They are spread over hundreds of folder and renamed here and there in attempts to identify or save meta data. At times I’ve done mass restores to separate folders that then were merged - it’s a nightmare.&lt;/li&gt;
+&lt;li&gt;After looking through &lt;a href="https://itsfoss.com/linux-photo-management-software/"&gt;some options&lt;/a&gt;, I settled on digiKam to try and help me sort this out. It looks like it does a great job of identifying duplicates which is the first step for me. Now I can go through all the files I have and sort them as I import them and remove the straight up duplicates.&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="customise-apps"&gt;Customise Apps&lt;/h3&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;vscodium
+&lt;ol type="1"&gt;
+&lt;li&gt;Change the terminal with the command palette &lt;code&gt;terminal: select default profile&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Set up sync with the &lt;a href="https://open-vsx.org/vscode/item?itemName=Shan.code-settings-sync"&gt;Settings Sync extension&lt;/a&gt;. Make sure it’s set to Auto Download and Auto Upload, add and remove extensions, and quiet sync (otherwise it keeps popping up an output window and taking the focus from any terminals that are running).&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;PyCharm
+&lt;ol type="1"&gt;
+&lt;li&gt;Change the terminal here too - use the &lt;a href="https://www.jetbrains.com/help/pycharm/settings-tools-terminal.html#project-settings"&gt;New Terminal&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;pandoc
+&lt;ol type="1"&gt;
+&lt;li&gt;Required for some of my static sites. pandoc is a pain but it’s easy to fix thanks to &lt;a href="https://stackoverflow.com/a/71585691"&gt;this post&lt;/a&gt;. Basically, in conda you can get it working with &lt;code&gt;conda install pandoc&lt;/code&gt;, and without conda there are other things that need doing.&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ol&gt;</content><category term="Development"></category><category term="Linux"></category><category term="Pop!_OS"></category><category term="Ubuntu"></category><category term="Anaconda"></category><category term="Filen"></category><category term="Internxt"></category><category term="Mega"></category><category term="Timeshift"></category><category term="nbfc"></category><category term="AppImageLauncher"></category><category term="Work in Progress"></category></entry><entry><title>Merging Git Repositories</title><link href="/merging-git-repositories.html" rel="alternate"></link><published>2024-06-27T00:00:00-06:00</published><updated>2024-07-05T00:00:00-06:00</updated><author><name>Brad Lazaruk</name></author><id>tag:None,2024-06-27:/merging-git-repositories.html</id><summary type="html">–</summary><content type="html">&lt;p&gt;I had a bunch of separate git repositories that I wanted to merge into one, while also maintaining the existing git history as much as possible.&lt;/p&gt;
+&lt;p&gt;There were three cases: one where the original repository is in a directory which can be simply renamed to fit into the new structure, one where the repository was in a subfolder which needed to be moved up a level or two, and one where there were multiple repositories in a directory which needed to be all be folded together into one directory in the new structure. The new repository should be reformatted so that it looks like all the commits were originally made in the new directory structure. In all cases there are loose files which had been added here and there over time and then not added to the repository at all. Overall, a big mess that I just wanted to get cleaned up, all added to a single repository, and then archived.&lt;/p&gt;
+&lt;p&gt;Turns out this is time consuming but not technically challenging. Thanks to &lt;a href="https://stackoverflow.com/a/10548919"&gt;this post&lt;/a&gt; from Andresch Serj, and reinforced with &lt;a href="https://www.slingacademy.com/article/how-to-merge-two-git-repositories-into-one/"&gt;this article on SlingAcademy&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Both of the cases require the use of &lt;a href="https://github.com/newren/git-filter-repo"&gt;git-filter-repo&lt;/a&gt;. To get this to work I simply downloaded the script, placed it into a new ~/opt directory, and set the file to executable. I then added this ~/opt directory to my path with export PATH=/home/&lt;username&gt;/opt:$PATH. I know this is ephemeral but it suits my purposes right now as I’m not sure I’m going to need to add more things to ~/opt in the future.&lt;/username&gt;&lt;/p&gt;
+&lt;h3 id="case-1"&gt;Case 1&lt;/h3&gt;
+&lt;p&gt;In this case, the source directory contains the development material. But it should be bundled together into a single subfolder so that it fits in the target directory as a sub-project, rather than hanging directly off the root, to make room for further sub-projects to be added.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;root
+|- target new directory
+|-- target new repository and tracked files
+|- existing source directory
+|-- existing source repository and tracked files
+|-- loose files&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;to&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;root
+|- new target directory
+|-- subdirectory - exact copy of the source directory
+|-- new repository blended with original repository&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;On the terminal, cd into the source directory. Use the command to bundle that material into a new sub-sub-project directory:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git filter-repo --to-subdirectory-filter &amp;lt;sub-sub-project&amp;gt; --force&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;So, if have a folder structure like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;root
+|- 2024_update
+|-- source_code&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and I want to have it look like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;root
+|- projectAlpha
+|-- 2024_update
+|--- source_code&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;then I first have to create the desired directory structure in place, with this command issued from the /2024_update folder:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git filter-repo --to-subdirectory-filter 2024_update --force&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;This will leave us with the intermediate structure of&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;root
+|- 2024_update
+|-- 2024_update
+|--- source_code&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now you can go to the target repository and merge the modified repository in.&lt;/p&gt;
+&lt;p&gt;Note: In the git remote command be sure of your spelling. The command will not give any error messages if you get the path wrong.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd &amp;lt;into the folder with the target repository&amp;gt;
+git remote add &amp;lt;name&amp;gt; /path/to/the/modified_repository
+git fetch &amp;lt;name&amp;gt; --tags
+git merge --allow-unrelated-histories &amp;lt;name&amp;gt;/&amp;lt;branch name&amp;gt;
+git remote remove &amp;lt;name&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The result of this will be the desired target structure and the git repository with the original timestamps and appearing to be commits to the current directory structure. Gather up and add the loose files and commit them to the new directory.&lt;/p&gt;
+&lt;h3 id="case-2"&gt;Case 2&lt;/h3&gt;
+&lt;p&gt;Here, the source repository is in a subfolder which needs to be moved up.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;root
+|- target new directory
+|-- target new repository and tracked files
+|- existing source directory
+|-- loose files
+|-- source subfolder
+|--- existing source repository
+|--- loose files&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;to&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;root
+|- new target directory
+|-- subdirectory - exact copy of the source directory
+|-- new repository blended with original repository&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The process here is mostly the same as in case 1. You just need to use the &lt;code&gt;git filter-repo&lt;/code&gt; command to create the target directory structure from the bottom up.&lt;/p&gt;
+&lt;p&gt;So, if have a folder structure like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;root
+|- 2024_update
+|-- 2023_proposal
+|--- july_presentation
+|---- source_code&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and I want to have it look like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;root
+|- projectAlpha
+|-- 2024_update
+|--- source_code&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;then I first have to create the desired directory structure in place, with this command issued from the july_presentation folder:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git filter-repo --to-subdirectory-filter 2024_update --force&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;This will leave us with the intermediate structure of&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;root
+|- 2024_update
+|-- 2023_proposal
+|--- july_presentation
+|---- 2024_update
+|----- source_code&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and the git repository will believe the root of this is the 2024_update directory. Now you can merge this repository into the target repository with the above commands to get the desired structure.&lt;/p&gt;
+&lt;h3 id="case-3"&gt;Case 3&lt;/h3&gt;
+&lt;p&gt;This case is a touch more complex as there are multiple repositories that need to be merged together to give the appearance that they were always in one repository and under the same parent directory.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;root
+|- target new directory
+|-- target new repository and tracked files
+|- existing source directory
+|-- loose files
+|-- subdirectory project 1
+|--- original repository 1
+|--- loose files
+|-- subdirectory project 2
+|--- original repository 2
+|--- loose files
+|-- subdirectory project 3
+|--- original repository 3
+|--- loose files&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;to&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;root
+|- target directory
+|-- subdirectory1 - exact copy of the source subdirectory 1
+|-- subdirectory2 - exact copy of the source subdirectory 2
+|-- subdirectory3 - exact copy of the source subdirectory 3
+|-- new repository blended with all the original repository&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For this I found it easiest to go through the subfolders and use the above &lt;code&gt;git filter-repo&lt;/code&gt; command to build the desired directory structure for each of the repositories. Then I used the fetch and merge commands above to merge each of those repositories into a new temporary repository, named for the desired new parent folder name. Once all the smaller repositories were folded together the &lt;code&gt;git filter-repo&lt;/code&gt; command is used on the temporary repository to bundle it all together into a single subfolder - and then finally that repository can be merged into the target repository.&lt;/p&gt;
+&lt;h2 id="all-cases"&gt;All Cases&lt;/h2&gt;
+&lt;p&gt;Done. Not the end of the world, really. Now you can review the folder structure of the new repository to make sure things moved as they should have, and check the git history to see if the merging worked as expected, maintaining the timestamps and respecting the new folder structure. If it didn’t, stop now and re-clone the new repository and do it all over again. If the git commands worked properly but there are some objects in the original directories still well, those were added to the directories but never to any repository. Just add them to the new target directory now so they are captured.&lt;/p&gt;
+&lt;p&gt;When everything looks as it should, sync up to GitHub, or archive it however you like. Then you can delete all the old directories so you don’t in the future have to wonder if you ever merged them! Clean as you go!&lt;/p&gt;</content><category term="Development"></category><category term="GitHub"></category><category term="Git"></category></entry><entry><title>Hello, world.</title><link href="/deploy-pelican-to-netlify.html" rel="alternate"></link><published>2022-08-14T14:11:00-06:00</published><updated>2023-06-27T16:31:00-06:00</updated><author><name>Brad Lazaruk</name></author><id>tag:None,2022-08-14:/deploy-pelican-to-netlify.html</id><summary type="html">The quick summary of how I created the shell of this site and deployed it from GitHub to Netlify</summary><content type="html">&lt;p&gt;Well it only seems fitting that the first post I write for this iteration of the site would be a description of how I made it. As I go back and add content from the old site(s) to this one I’m going to manually update the timestamp to the original posting time. So things may be older on the site - but this is the first post. This site is a static site generated with &lt;a href="https://getpelican.com"&gt;Pelican&lt;/a&gt; and hosted on &lt;a href="https://netlify.com"&gt;Netlify&lt;/a&gt;. I chose Pelican because I wanted a static site generator, and I wanted it to be associated with Python if possible, and I wanted to use Markdown to write the actual posts and files. I don’t require anything like Django right now … maybe later.&lt;/p&gt;
+&lt;p&gt;Assumptions: You have a &lt;a href="https://github.com"&gt;GitHub&lt;/a&gt; account, and GitHub desktop is installed and configured. &lt;a href="https://anaconda.com"&gt;Anaconda&lt;/a&gt; is installed and configured. You’ve got a Netlify account.&lt;/p&gt;
+&lt;h2 id="setup"&gt;Setup&lt;/h2&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;&lt;p&gt;I like Anaconda, so I defined a new environment there. I double checked that python was at least version 3.8, and installed pelican and markdown, along with whatever dependencies those brought about.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Since I prefer to use GitHub desktop I fired that up and clicked on File &amp;gt; New Repository. I gave my new repo a name and description and pointed the local path to the repos folder to let the application create the subfolder based on the name of the repository. I created the README so I could populate it later. Since I was creating my own Git ignore file later I did not choose one here and I since this is a Pelican website I used the GNU AGPLv3 license to respect the license of the original project.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Now I opened the project folder and create a file called .gitignore. Into .gitignore I added the default Python exclusions from &lt;a href="https://gitignore.io"&gt;gitignore.io&lt;/a&gt;, and at the end of the file I added&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Pelican output directory
+    output/&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After committing that to the repo the standard Python bits, as well as the output directory of the site itself, are not going to be pushed to GitHub. That’s fine since Netlify will be rebuilding the output directory locally every time I commit a new change to the repo.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;From inside the project folder, I setup the pelican structure with the command &lt;code&gt;pelican-quickstart&lt;/code&gt;. This launched a configuration wizard. I accepted the defaults except for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;“What will be the title of this web site?”
+&lt;ul&gt;
+&lt;li&gt;This is written to the pelicanconf.py file as the SITENAME&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;“Who will be the author of this web site?”
+&lt;ul&gt;
+&lt;li&gt;Written to pelicanconf.py as AUTHOR&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;“Do you want to specify a URL prefix?”
+&lt;ul&gt;
+&lt;li&gt;Set this to N. When I specified Y then the URL was used instead of relative paths for images which made local development pretty much impossible.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Get the timezone for the site from &lt;a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"&gt;Wikipedia&lt;/a&gt;, and enter it when prompted&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="customise-pelican-and-prepare-it-for-netlify"&gt;Customise Pelican and Prepare It For Netlify&lt;/h2&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;&lt;p&gt;I wanted to have a bit of a theme on the site from the beginning, so I hunted around on &lt;a href="http://pelicanthemes.com"&gt;pelicanthemes.com&lt;/a&gt; and settled on the &lt;a href="https://github.com/molivier/nest"&gt;nest&lt;/a&gt; theme. After messing about with it a bit I discovered that it needed to be changed to work with the version of Pelican I was using. So I &lt;a href="https://github.com/lazarukb/nest"&gt;forked&lt;/a&gt; the original theme and applied the changes to the fork.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;To do the changes I edited base.html on the theme and changed four instances of ‘|format(’ to be ‘.format(slug=’, so that CATEGORY_FEED_ATOM|format(category.slug) becomes ‘CATEGORY_FEED_ATOM.format(slug=category.slug)’.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;After that, I created a /theme folder in the project folder, and downloaded the theme to it.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;In the project folder under /content, I added an images folder and a file there for the logo of the site. I scaled it down to 25x25. I also added an image for the background of the header.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;To pelicanconf.py I added the &lt;a href="https://github.com/molivier/nest"&gt;default configuration information for the theme&lt;/a&gt;. Among other customisations for various strings I pointed the site logo to ‘/images/logo.png’, including the path, and homepage header image specified as the filename only, ‘header-scaled.jpg’.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;That should be the base of the site. I committed those changes to the repo and test built the site locally with&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pelican content -d -s publishconf.py -t theme --autoreload
+pelican --listen&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;… which you can now combine on Windows as&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pelican content -d -s publishconf.py -t theme --autoreload --listen&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Alternatively you can skip the second command for –listen and use a local server like Live Server in vscode to actually view the site.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;-d&lt;/code&gt; flag causes pelican to delete the content directory before rebuilding the site. The &lt;code&gt;--autoreload&lt;/code&gt; flag tells pelican to keep watch on the content folders and rebuild the site automatically when content is added, edited, or removed. As expected, that gave me a functioning site on http://localhost:8000 with the logo and background images I specified.&lt;/p&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;Special usage note: until the site is building reliably, just use&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;pelican content -d -s publishconf.py -t theme&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;…so you can see the console errors in the build process.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Now that the shell is working, I created a requirements.txt file of the working environment, both as a checkpoint myself and also so Netlify will be able to duplicate it, with the command &lt;code&gt;pip freeze &amp;gt; requirements.txt&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;When I tested this originally, Netlify was deploying the site with Python 2.7 which was not at all working. So to specify the version of Python I was using locally, 3.8, per &lt;a href="https://docs.netlify.com/configure-builds/manage-dependencies/#python"&gt;the docs&lt;/a&gt; I created a runtime.txt file in the root of the project, and added &lt;strong&gt;3.8&lt;/strong&gt; to that file.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;After committing those changes to the repo, it’s ready to go. So I published it to GitHub with the desktop app. I left the repo set to private at this point.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="deploy-the-site-to-netlify"&gt;Deploy the site to Netlify&lt;/h2&gt;
+&lt;p&gt;All that remains is to deploy the site with Netlify.&lt;/p&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;I logged in to Netlify and selected Sites &amp;gt; Add New Site &amp;gt; Import an existing project.&lt;/li&gt;
+&lt;li&gt;On the next page, I clicked GitHub.
+&lt;ul&gt;
+&lt;li&gt;The first time I did this I needed to connect my Netlify account to my GitHub account by following the prompts.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Once GitHub and Netlify were connected, I did a search on my repos to find the one for the website, and selected it.&lt;/li&gt;
+&lt;li&gt;On the next page:
+&lt;ul&gt;
+&lt;li&gt;on &lt;em&gt;branch to deploy&lt;/em&gt; I selected &lt;strong&gt;main&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The &lt;em&gt;base directory&lt;/em&gt; I left blank.&lt;/li&gt;
+&lt;li&gt;The &lt;em&gt;build command&lt;/em&gt; is &lt;code&gt;pelican content -s publishconf.py -t theme&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;The &lt;em&gt;publish directory&lt;/em&gt; is &lt;strong&gt;output&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;That’s it. I clicked on Deploy Site and awaited …&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;… the shell of my site was deployed to Netlify. Volia.&lt;/p&gt;
+&lt;p&gt;After that all that remained was to re-direct my domain to point here, and configure the Let’s Encrypt certificate to enable HTTPS. This is available under the Netlify Site settings for the new site. Following the directions on the Netlify pages this change took me all of 4 minutes of editing on my DNS server, and the deployment of the SSL certificate was a couple of clicks and otherwise automatically done in a few minutes.&lt;/p&gt;
+&lt;p&gt;And that’s it. After several years of stalling I have completed a reasonable starting point for a new static site version of the website and deployed it. Took me a couple of hours to figure it all out, and maybe 20 minutes start to finish for the final production version. Hope this helps.&lt;/p&gt;
+&lt;hr/&gt;
+&lt;h3 id="thanks"&gt;Thanks!&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://razcodes.dev/"&gt;Raz&lt;/a&gt;, for general direction &lt;a href="https://dev.to/razcodes/how-to-create-a-static-website-using-pelican-24he"&gt;here&lt;/a&gt; and &lt;a href="https://dev.to/razcodes/how-to-deploy-your-static-pelican-website-to-netlify-55d7"&gt;here&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://frankcorso.dev/"&gt;Frank Corso&lt;/a&gt; for the general directions &lt;a href="https://frankcorso.dev/deploying-your-pelican-static-site-to-netlify.html"&gt;here&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/mirajpatel19"&gt;Miraj Patel&lt;/a&gt; for the pointers to hack the theme so it would work with Pelican 4 &lt;a href="https://github.com/getpelican/pelican/issues/2489#issuecomment-472176621"&gt;here&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Development"></category><category term="Pelican"></category><category term="Python"></category><category term="Netlify"></category><category term="GitHub"></category></entry><entry><title>Add to Pelican - Sitemap and Robots.txt</title><link href="/add-sitemap-and-robots-to-pelican.html" rel="alternate"></link><published>2022-09-11T00:00:00-06:00</published><updated>2022-09-11T00:00:00-06:00</updated><author><name>Brad Lazaruk</name></author><id>tag:None,2022-09-11:/add-sitemap-and-robots-to-pelican.html</id><summary type="html">–</summary><content type="html">&lt;p&gt;Finally with some more time on my hands I fixed up the last bit of the site migration from Wordpress to Pelican: adding the sitemap and robots.txt file.&lt;/p&gt;
+&lt;p&gt;The robots.txt file was easy, as this is a static file in the first place. Just create the file in /content/extra and on the next build it will be available in the output.&lt;/p&gt;
+&lt;p&gt;The sitemap is a bit more involved. Fortunately, there’s &lt;a href="https://github.com/pelican-plugins/sitemap"&gt;a plugin for that&lt;/a&gt;.&lt;/p&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;Add the sitemap plugin to your environment.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;python -m pip install pelican-sitemap&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start="2" type="1"&gt;
+&lt;li&gt;Update your requirements.txt so the deployments to other environments, like Netlify when this is published, also add the plugin.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;pip freeze &amp;gt; requirements.txt&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start="3" type="1"&gt;
+&lt;li&gt;Add the configuration of the plugin to pelicanconf.py file.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;    SITEMAP = {
+    "format": "xml",
+    "priorities": {
+        "articles": 0.5,
+        "indexes": 0.5,
+        "pages": 0.5
+    },
+    "changefreqs": {
+        "articles": "monthly",
+        "indexes": "daily",
+        "pages": "monthly"
+    },
+    "exclude": ["tag/", "category/", "author/"]
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And … that’s that. Super easy. Pelican is great.&lt;/p&gt;</content><category term="Development"></category><category term="Pelican"></category><category term="Python"></category><category term="Netlify"></category><category term="GitHub"></category><category term="Sitemap"></category><category term="Pelican Plugins"></category></entry><entry><title>Fixing my Pelican to display images</title><link href="/fixing-pelican-to-show-images.html" rel="alternate"></link><published>2022-09-02T00:00:00-06:00</published><updated>2022-09-02T00:00:00-06:00</updated><author><name>Brad Lazaruk</name></author><id>tag:None,2022-09-02:/fixing-pelican-to-show-images.html</id><summary type="html">–</summary><content type="html">&lt;p&gt;I found that the Pelican site theme I was using was automatically expanding images to 100% width, which I didn’t want to have. I also wanted to use captions on my images.&lt;/p&gt;
+&lt;p&gt;Thanks to &lt;a href="https://www.joelotz.com/blog/2021/use-pandoc-markdown-in-pelican.html"&gt;Joe Lotz&lt;/a&gt; I was able to sort this out.&lt;/p&gt;
+&lt;p&gt;This involved switching from the Pelican provided &lt;a href="https://python-markdown.github.io/"&gt;Python Markdown&lt;/a&gt; to &lt;a href="https://garrettgman.github.io/rmarkdown/authoring_pandoc_markdown.html"&gt;Pandoc Markdown&lt;/a&gt;. This adds a whole bunch more Markdown functionality to the site.&lt;/p&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;Add Pandoc and the Pelican Pandoc reader to your environment.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;python -m pip install pandoc
+python -m pip install pelican-pandoc-reader&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start="2" type="1"&gt;
+&lt;li&gt;Update your requirements.txt so the deployments to other environments, like Netlify when this is published, also do this.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;pip freeze &amp;gt; requirements.txt&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start="3" type="1"&gt;
+&lt;li&gt;I wanted to extend the site CSS to use my own CSS file. But I also wanted to not make a lot of changes to the source CSS of the theme if possible. So I created a new CSS file under /theme/static/css and then updated /theme/templates/base.html and added my css file in last. I also had to edit the pelicanconf.py file and change the line &lt;code&gt;NEST_CSS_MINIFY = True&lt;/code&gt; to &lt;code&gt;NEST_CSS_MINIFY = False&lt;/code&gt;; without this change the minified css file is used instead and my custom css is ignored.&lt;/li&gt;
+&lt;li&gt;Now I was able to comment out the &lt;code&gt;width: 100%&lt;/code&gt; and &lt;code&gt;height: 100%&lt;/code&gt; from nest.css, and add the captioning CSS that I wanted to use to lazaruk.css.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This also served as a good reminder that css settings for images override the settings on individual images. Because I wanted to use the individual settings to define image size I needed comment those out of the css completely.&lt;/p&gt;</content><category term="Development"></category><category term="Pelican"></category><category term="Python"></category><category term="Netlify"></category><category term="GitHub"></category><category term="Pandoc"></category></entry></feed>

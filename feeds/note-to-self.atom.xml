@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>lazaruk.com - Note to Self</title><link href="/" rel="alternate"></link><link href="/feeds/note-to-self.atom.xml" rel="self"></link><id>/</id><updated>2022-09-10T00:00:00-06:00</updated><subtitle>wasting electons since 1999</subtitle><entry><title>Email Sieve Filtering with Simplelogin</title><link href="/sieve-filtering-with-simplelogin.html" rel="alternate"></link><published>2022-09-10T00:00:00-06:00</published><updated>2022-09-10T00:00:00-06:00</updated><author><name>Brad Lazaruk</name></author><id>tag:None,2022-09-10:/sieve-filtering-with-simplelogin.html</id><summary type="html">–</summary><content type="html">&lt;p&gt;Recently I started using &lt;a href="https://simplelogin.io"&gt;Simplelogin&lt;/a&gt;. A wonderful service, it lets you create temporary email addresses and disable or delete them when you don’t want them anymore.&lt;/p&gt;
+&lt;p&gt;I also get to redirect all my domain email through there so I can use throwaway email addresses with my own &lt;span class="citation" data-cites="lazaruk.com"&gt;@lazaruk.com&lt;/span&gt; domain.&lt;/p&gt;
+&lt;p&gt;But on the downside, once I turned it on, all my email filters broke. Most of them were based on sender email addresses or domains in the SMTP header &lt;em&gt;from&lt;/em&gt; field, and with Simplelogin intercepting all the emails the addresses all changed and the domain for all email reaching me is now simplelogin.co.&lt;/p&gt;
+&lt;p&gt;I’ve had the same email address for 25 years, and I have no intention of disabling it. So for those spammers that are sending to my main address I need to filter their mail after Simplelogin has forwarded it.&lt;/p&gt;
+&lt;p&gt;This gave me the reason to finally figure out the &lt;a href="http://sieve.info/"&gt;Sieve&lt;/a&gt; email filtering that my mail service provider has.&lt;/p&gt;
+&lt;p&gt;In the end I was able to work out three filters: one for the name that the sender included in their email, one for their original &lt;em&gt;from&lt;/em&gt; address, and another for the &lt;em&gt;Message-ID&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;To-Do&lt;/strong&gt;: I’m sure there are too many commands in the require statements. I still need to go through those and reduce them to the minimum required.&lt;/p&gt;
+&lt;h3 id="name"&gt;Name&lt;/h3&gt;
+&lt;p&gt;By far the easiest to implement, probably the most useful for filtering people that I know, and also the least likely to be useful for filtering spammers. Spammers will easily change the “name” that they appear to send their email from. On the other hand, my friends “Bob McGoodGuy” and “Alice SeemsFriendly” always configure their email accounts to send their name as the &lt;em&gt;from&lt;/em&gt; field.&lt;/p&gt;
+&lt;p&gt;So to file emails from my friends, I use this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric"];
+require ["fileinto"];
+
+if allof (address :all :comparator "i;unicode-casemap" :contains "From" ["Bob McGoodGuy", "Alice SeemsFriendly"]) {
+    fileinto "Mail from friends";
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;While to reject emails from “Eve Real-Person”, who just won’t leave me alone, this does the trick:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric"];
+require ["reject"];
+
+if allof (address :all :comparator "i;unicode-casemap" :contains "From" "Eve Real-Person") {
+    reject "550 5.1.1: Recipient address rejected: Address does not exist";
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="from-address"&gt;From: Address&lt;/h3&gt;
+&lt;p&gt;Now some spammers will fiddle with their &lt;em&gt;from&lt;/em&gt; name, but leave the email address they are sending from alone. Also, this filter works for catching those distribution lists that are not respecting unsubscribe requests. They often send from the same addresses or domains and so are easy to filter. It can also be used to reject entire domains.&lt;/p&gt;
+&lt;p&gt;But as I noted above, the &lt;em&gt;from&lt;/em&gt; field is always changed by Simplelogin. You can set it up so that the “name” portion is retained and still comes through in the &lt;em&gt;from&lt;/em&gt; field. But the address is always changed.&lt;/p&gt;
+&lt;p&gt;To resolve this, I configured Simplelogin to include to original sender in the email headers (just a click in their settings). And now I just have to have my sieve filter scan the &lt;em&gt;X-Simplelogin-Envelope-From&lt;/em&gt; field in the header and compare the original name and email address information with those that I want to filter.&lt;/p&gt;
+&lt;p&gt;All this also has the nice effect of surviving and functioning if I choose to change the way Simplelogin presents the original sender name to me. There are a few options, but changing them won’t break these sieve filters.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric"];
+require ["imap4flags", "reject"];
+
+if anyof (header :is "X-Simplelogin-Envelope-From" ["daily-list.ext", "newsletter@daily-list.ext", "idiot06@yahoo.ca", "Spammer McSpammyPants"]) {
+    reject "550 5.1.1: Recipient address rejected: Address does not exist";
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="message-id"&gt;Message-ID&lt;/h3&gt;
+&lt;p&gt;The most complicated so far is for those spammers that change the name and email domain in the header &lt;em&gt;from&lt;/em&gt; field. This, of course, is most of them.&lt;/p&gt;
+&lt;p&gt;Now I’m sure this will be an evolving battle.&lt;/p&gt;
+&lt;p&gt;Even if their names and domains are forged, they still need to send the emails from somewhere. And those spammers that are concerned about not wasting their time and resources will put in legitimate addresses to catch bouncebacks from mailboxes that no longer exist. That way when they receive a “550” error that my mailbox doesn’t exist they stop sending mail to that address.&lt;/p&gt;
+&lt;p&gt;I know that this field is set by the spammers so they can technically forge it too, but right now the &lt;em&gt;Message-ID&lt;/em&gt; field is giving me enough to filter them with.&lt;/p&gt;
+&lt;p&gt;Checking into the headers of the recent batches of spam, I noted they were coming from a few specific domains. So I added a filter to scan the &lt;em&gt;Message-ID&lt;/em&gt; field and trigger if those domains are found.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "imap4flags", "reject"];
+
+if anyof (header :contains "Message-Id" ["@spammer-domain.com", "@alter.spammers.co", "@another.spammer.net"]) {
+    reject "550 5.1.1: Recipient address rejected: Address does not exist";
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And voila. Regardless of the name and email address that the spammer uses, this does the job in rejecting messages that include those domains in the &lt;em&gt;Message-ID&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;So for so good!&lt;/p&gt;</content><category term="Note to Self"></category><category term="sieve filtering"></category><category term="simplelogin"></category></entry><entry><title>Remember to Disable Caching</title><link href="/disable-caching.html" rel="alternate"></link><published>2022-09-02T00:00:00-06:00</published><updated>2022-09-02T00:00:00-06:00</updated><author><name>Brad Lazaruk</name></author><id>tag:None,2022-09-02:/disable-caching.html</id><summary type="html">–</summary><content type="html">&lt;p&gt;Remember when doing site development work to disable local caching in the browser dev tools.&lt;/p&gt;
+&lt;figure&gt;
+&lt;img alt="Disable caching on the browser when doing site development" src="/images/devtools.png"/&gt;&lt;figcaption aria-hidden="true"&gt;Disable caching on the browser when doing site development&lt;/figcaption&gt;
+&lt;/figure&gt;</content><category term="Note to Self"></category><category term="caching"></category></entry><entry><title>PowerPoint Wrapping In The Middle of a Word</title><link href="/powerpoint-words-wrapping.html" rel="alternate"></link><published>2022-08-21T00:00:00-06:00</published><updated>2022-08-21T00:00:00-06:00</updated><author><name>Brad Lazaruk</name></author><id>tag:None,2022-08-21:/powerpoint-words-wrapping.html</id><summary type="html">How to stop Microsoft PowerPoint from wrapping words in the middle of a word</summary><content type="html">&lt;p&gt;I had a PowerPoint document that I inherited where the text boxes were allowing words to be split in the middle of the word. Turns out the solution, copied/pasted below, was this:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Your presentation was edited at one time on a computer running an oriental language. When that happened, an obscure PowerPoint setting got applied to it. If it’s just a few placeholders that are affected, here’s how to fix it:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;Choose File&amp;gt;Options&amp;gt;Language. In the Office authoring languages and proofing section, click Add a Language.&lt;/li&gt;
+&lt;li&gt;Choose an Asian language (Chinese, Japanese, Korean all will work). OK out and restart all Office programs.&lt;/li&gt;
+&lt;li&gt;Open your deck in PowerPoint.&lt;/li&gt;
+&lt;li&gt;Select the text in an affected text box or text placeholder.&lt;/li&gt;
+&lt;li&gt;Open the Home&amp;gt;Paragraph dialog and click on the Asian Typography tab.&lt;/li&gt;
+&lt;li&gt;Uncheck the option for Allow Latin text to wrap in the middle of a Word. OK out.&lt;/li&gt;
+&lt;li&gt;Repeat steps 4 to 6 for all other affected text boxes and text placeholders.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If the presentation is large and the problem is widespread, take an alternate approach:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;ol type="1"&gt;
+&lt;li&gt;Use File&amp;gt;Save As and change the Save as type to PowerPoint XML Presentation (*.xml).&lt;/li&gt;
+&lt;li&gt;Open the XML file in NotePad&lt;/li&gt;
+&lt;li&gt;Choose Edit&amp;gt;Replace.&lt;/li&gt;
+&lt;li&gt;In the Find what field, type latinBreak=“1”.&lt;/li&gt;
+&lt;li&gt;In the Replace with field, type latinBreak-“0”&lt;/li&gt;
+&lt;li&gt;Choose Replace All.&lt;/li&gt;
+&lt;li&gt;Save the file and close NotePad.&lt;/li&gt;
+&lt;li&gt;Open PowerPoint and use File&amp;gt;Open to find and reopen the XML version. Resave in the normal PowerPoint pptx format. All English text will now break normally.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a href="https://answers.microsoft.com/en-us/msoffice/forum/all/powerpoint-text-box-issue-how-to-stop-text/9f574574-d287-4394-86d9-1c44d667098f"&gt;PowerPoint text box issue: how to stop text splitting in the middle of words in a text box MS PowerPoint 365 plz i need answer&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;</content><category term="note to self"></category><category term="PowerPoint"></category></entry><entry><title>Problems with BOINC</title><link href="/my-problems-with-boinc.html" rel="alternate"></link><published>2022-08-19T08:59:00-06:00</published><updated>2022-08-19T08:59:00-06:00</updated><author><name>Brad Lazaruk</name></author><id>tag:None,2022-08-19:/my-problems-with-boinc.html</id><summary type="html">Solving a problem with getting BOINC and World Community Grid to download new work to me</summary><content type="html">&lt;p&gt;I’m a long time user of &lt;a href="https://boinc.berkeley.edu/"&gt;BOINC&lt;/a&gt;. In fact I was an early user of the old SETI@Home project before BOINC was even established.&lt;/p&gt;
+&lt;p&gt;Over the years I’ve tried some project managers with BOINC, starting with &lt;a href="http://www.gridrepublic.org/"&gt;GridRepublic&lt;/a&gt;, and then moving to &lt;a href="https://www.worldcommunitygrid.org/"&gt;World Community Grid&lt;/a&gt; when I joined IBM in 2005.&lt;/p&gt;
+&lt;p&gt;A few years ago it seemed to me that GridRepublic was no longer being maintained and so I dabbled with &lt;a href="https://scienceunited.org/"&gt;ScienceUnited&lt;/a&gt; as well.&lt;/p&gt;
+&lt;p&gt;But in the end I didn’t like the strain that ScienceUnited was putting on my laptop, and I felt that I had to spend far too much time tweaking and monitoring it so that it completed the work units on time. So I decided to switch back to World Community Grid where I could easily specify limits that I was comfortable with and knew they would be respected.&lt;/p&gt;
+&lt;p&gt;At the beginning of 2022, IBM transferred the WCG project to Krembil, and as part of the migration all work was stopped. When the project came back online I wasn’t getting new work units.&lt;/p&gt;
+&lt;p&gt;So today I finally took the time to look into this.&lt;/p&gt;
+&lt;p&gt;Removing and re-adding the WCG project from BOINC didn’t solve the problem. In fact, I was unable to re-add the project at all to my BOINC manager; I just got errors when trying to do so. So I tried removing the application entirely and re-installing from the version downloaded from the BOINC website, and from the WCG website. Neither of those solved the problem. I was sometimes able to add the project to the BOINC manager, and sometimes not. But even when it did add I was unable to get any work units to transfer.&lt;/p&gt;
+&lt;p&gt;Performing a scrub of the program files directories and the registry didn’t move things forward for me either.&lt;/p&gt;
+&lt;p&gt;But finally, installing the BOINC client as downloaded from ScienceUnited and then using it to attach to World Community Grid worked. The project attached and new work units are being downloaded in a reasonable timeframe.&lt;/p&gt;
+&lt;p&gt;Odd. But it works.&lt;/p&gt;</content><category term="note to self"></category><category term="BOINC"></category><category term="GridRepublic"></category><category term="World Community Grid"></category><category term="ScienceUnited"></category></entry><entry><title>Updating Anaconda Navigator</title><link href="/updating-anaconda-navigator.html" rel="alternate"></link><published>2021-03-25T00:00:00-06:00</published><updated>2021-03-25T00:00:00-06:00</updated><author><name>Brad Lazaruk</name></author><id>tag:None,2021-03-25:/updating-anaconda-navigator.html</id><summary type="html">Updating Anaconda Navigator</summary><content type="html">&lt;p&gt;For whatever reason my installations of Anaconda Navigator always refuse to update through the GUI. No matter how many times I click the Yes to upgrade, nothing happens.&lt;/p&gt;
+&lt;p&gt;So finally I found 15 seconds where I was both tired of this situation and had the clarity of thought to do something about it.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;conda deactivate
+conda update anaconda-navigator&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Problem solved. Sigh.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a href="https://docs.anaconda.com/anaconda/navigator/update-navigator/"&gt;Updating Navigator — Anaconda documentation&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;</content><category term="note to self"></category><category term="Anaconda"></category><category term="conda"></category></entry></feed>
