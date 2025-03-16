@@ -60,7 +60,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Moving to Linux, Issues and Lessons Learned</h1>
-                      <p class="header-date">By <a href="/author/brad-lazaruk.html">Brad Lazaruk</a>, Fri 05 July 2024, modified Sun 14 July 2024, in category <a href="/category/development.html">Development</a></p>
+                      <p class="header-date">By <a href="/author/brad-lazaruk.html">Brad Lazaruk</a>, Fri 05 July 2024, modified Sat 28 December 2024, in category <a href="/category/development.html">Development</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -82,10 +82,19 @@
         <p>Of course when moving from over 30 years of using Windows to a Linux system, I made a few mistakes and had to look up a few things.</p>
 <h3 id="updates-to-the-dock">Updates to the dock</h3>
 <p>In playing around with various dock extensions I found that my default dock had a delay of 3-5 seconds between an app being launched or closed and the icon being added or removed from the dock. I figured that since the Pop!_OS dock is a customised version of Dash to Dock, and I had installed that extension, I had probably corrupted something. Research led me <a href="https://www.reddit.com/r/pop_os/comments/oxm96p/reset_cosmic_dock_to_default_settings/">here</a>, which may have fixed the problem. I also went back to the <a href="https://extensions.gnome.org/">gnome extensions site</a> and disabled the “Ubuntu AppIndicators” extension, even though it says that extension does nothing and it seems to automatically re-enable itself. This action appeared to fix the problem but in hindsight that doesn’t really make sense to me and further testing would be required.</p>
-<h3 id="loss-of-right-mouse-click">Loss of right-mouse click</h3>
-<p>After a reboot one day I found that my right-mouse button was not working on the desktop or in the default file manager. It worked in my browser, other file managers, and most other applications. I’ve yet to find out exactly which setting, but using the Gnome-Tweaks application was the problem. Doing a “result to default values” in there and then logging out-in re-enabled the functionality.</p>
+<h3 id="partial-loss-of-right-mouse-click-context-menus">Partial loss of right-mouse click context menus</h3>
+<p>After a reboot one day I found that my right-mouse button was not working on the desktop or in the default file manager. It worked in my browser, other file managers, and most other applications. Initially I thought it was something in the gnome-tweaks application, and that resetting to default values had fixed it. But this was not the case. After more investigation I determined that the problem only existed on the non-primary monitor. I could right click fine on the primary monitor, no matter which of the panels was set to be the primary. But the others - no right click. The <a href="https://forum.level1techs.com/t/solved-dual-monitor-issue-with-popos/201083/3">actual solution to this</a> was to remove the monitor config files from ~/.config, then log out and in again. Sigh.</p>
 <h3 id="suspend">Suspend</h3>
 <p>Doesn’t work very well when the graphics are set to nVidia mode. Seems to work fine in integrated and hybrid mode, although then I wouldn’t be able to use the external monitors.</p>
+<h3 id="internxt">Internxt</h3>
+<p>I purchased a large block of space from Internxt to use for syncing, since my previous file sync solution was not supported on Linux. What a scam. Internxt is a scam. Internxt has been refusing to honour their money-back guarantee for half a year now, despite my first requests to them being well within the 30 day “warranty” window. The service sort of works for use cases that don’t help me, but doesn’t work at all for my use cases. I understand that I should have tested this before I made a financial investment with them, but I did realise the error and request a refund quickly. That they have refused to honour their refund policy is despicable. Buyer beware with Internxt - Internxt is a scam.</p>
+<h3 id="watching-the-logs">Watching the logs</h3>
+<p>journalctl -f</p>
+<h3 id="tracker-miner-fs-3">tracker-miner-fs-3</h3>
+<p>Had some troubles with this, which became visible with watching the journalctl log. Seemed that the database was corrupt. Some research showed that it was super risky and maybe impossible to remove the service. So I reset it, and the problems went away.</p>
+<p>Get the status <code>tracker3 status</code></p>
+<p>Reset it <code>tracker3 reset -s -r</code> and then restart it <code>tracker3 daemon --start</code></p>
+<p>Note the “3” on the end of the executable.</p>
 
 
         
@@ -131,7 +140,7 @@
                         <p class="pull-right text-right">
                             <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
                             <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
-                            <small>&copy; Brad Lazaruk 1999-2024</small>
+                            <small>&copy; Brad Lazaruk 1999-2025</small>
                         </p>
                     </div>
                 </div>
