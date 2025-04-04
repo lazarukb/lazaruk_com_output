@@ -276,7 +276,7 @@ git remote remove &amp;lt;name&amp;gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;ul&gt;
 &lt;li&gt;Set this to N. When I specified Y then the URL was used instead of relative paths for images which made local development pretty much impossible.&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Get the timezone for the site from &lt;a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"&gt;Wikipedia&lt;/a&gt;, and enter it when prompted&lt;/li&gt;
+&lt;li&gt;Get the timezone for the site from &lt;a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"&gt;Wikipedia&lt;/a&gt;, and enter it when prompted.&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id="customise-pelican-and-prepare-it-for-netlify"&gt;Customise Pelican and Prepare It For Netlify&lt;/h2&gt;
